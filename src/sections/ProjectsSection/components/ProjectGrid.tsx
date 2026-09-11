@@ -6,7 +6,13 @@ export type ProjectGridProps = {
     projectUrl: string;
     projectLinkVariant: string;
     imageWrapperVariant: string;
-    imageUrl: string;
+    imageSources: {
+      small: string;
+      medium: string;
+      large: string;
+    };
+    imageWidth: number;
+    imageHeight: number;
     title: string;
     description: string;
     tagText: string;
@@ -24,7 +30,9 @@ export const ProjectGrid = (props: ProjectGridProps) => {
           projectUrl={project.projectUrl}
           projectLinkVariant={project.projectLinkVariant}
           imageWrapperVariant={project.imageWrapperVariant}
-          imageUrl={project.imageUrl}
+          imageSources={project.imageSources}
+          imageWidth={project.imageWidth}
+          imageHeight={project.imageHeight}
           title={project.title}
           description={project.description}
           tagText={project.tagText}

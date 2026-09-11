@@ -1,11 +1,127 @@
+import { useEffect, useRef, useState } from "react";
+
 export type ProjectCardProps = {
   projectUrl: string;
   projectLinkVariant: string;
   imageWrapperVariant: string;
-  imageUrl: string;
+  imageSources: {
+    small: string;
+    medium: string;
+    large: string;
+  };
+  imageWidth: number;
+  imageHeight: number;
   title: string;
   description: string;
   tagText: string;
+};
+
+const getProjectVideoSource = (sources: ProjectCardProps["imageSources"]) => {
+  const pixelWidth = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2);
+
+  if (pixelWidth <= 600) {
+    return sources.small;
+  }
+
+  if (pixelWidth <= 1000) {
+    return sources.medium;
+  }
+
+  return sources.large;
+};
+
+type LazyProjectVideoProps = {
+  sources: ProjectCardProps["imageSources"];
+  title: string;
+  width: number;
+  height: number;
+};
+
+const LazyProjectVideo = ({
+  sources,
+  title,
+  width,
+  height,
+}: LazyProjectVideoProps) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [source, setSource] = useState<string>();
+
+  useEffect(() => {
+    const video = videoRef.current;
+
+    if (!video) {
+      return;
+    }
+
+    const loadVideo = () => {
+      setSource(getProjectVideoSource(sources));
+    };
+
+    const checkVisibility = () => {
+      const bounds = video.getBoundingClientRect();
+
+      if (bounds.top < window.innerHeight && bounds.bottom > 0) {
+        loadVideo();
+      }
+    };
+
+    checkVisibility();
+    window.addEventListener("scroll", checkVisibility, { passive: true });
+    window.addEventListener("resize", checkVisibility);
+
+    if (!("IntersectionObserver" in window)) {
+      loadVideo();
+      return () => {
+        window.removeEventListener("scroll", checkVisibility);
+        window.removeEventListener("resize", checkVisibility);
+      };
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          loadVideo();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px" },
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", checkVisibility);
+      window.removeEventListener("resize", checkVisibility);
+    };
+  }, [sources]);
+
+  useEffect(() => {
+    if (!source || !videoRef.current) {
+      return;
+    }
+
+    const video = videoRef.current;
+    video.load();
+    void video.play().catch(() => undefined);
+  }, [source]);
+
+  return (
+    <video
+      ref={videoRef}
+      role="img"
+      aria-label={title}
+      width={width}
+      height={height}
+      autoPlay={Boolean(source)}
+      muted
+      loop
+      playsInline
+      preload={source ? "auto" : "none"}
+      src={source}
+      className="project-image box-border caret-transparent max-w-full outline-[3px] w-full"
+    />
+  );
 };
 
 export const ProjectCard = (props: ProjectCardProps) => {
@@ -24,14 +140,11 @@ export const ProjectCard = (props: ProjectCardProps) => {
         <div
           className={`project-image-frame bg-stone-300 shadow-[rgb(255,255,255)_0px_0px_0px_10px,rgba(0,0,0,0.15)_0px_6px_24px_8px] box-border caret-transparent mb-[-60px] min-h-[100px] min-w-[100px] outline-[3px] border overflow-hidden rounded-lg border-solid border-black/10 md:-mb-20 ${props.imageWrapperVariant}`}
         >
-          <img
-            src={props.imageUrl}
-            alt={props.title}
-            width="1920"
-            height="1080"
-            loading="lazy"
-            decoding="async"
-            className="project-image box-border caret-transparent max-w-full outline-[3px] w-full"
+          <LazyProjectVideo
+            sources={props.imageSources}
+            title={props.title}
+            width={props.imageWidth}
+            height={props.imageHeight}
           />
         </div>
       </a>

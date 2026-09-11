@@ -19,6 +19,7 @@ Keep entries sorted in DESC order (newest first) so recent knowledge stays in pr
 - The hero is intentionally text-only with a local system serif display stack; service and value reveal/hover effects live in `src/inline-styles.css` and must retain reduced-motion overrides.
 - The contact CTA is intentionally image-free and centered on desktop/mobile; its mobile visibility and no-overflow behavior are covered in `tests/site.spec.js`.
 - Browser tab metadata is intentionally brand-only: `title` is `Scribble` and the favicon is `public/assets/site/scribble-mark.svg`.
+- Selected Work uses lazy WebM still videos from `public/assets/site/work`; keep the four-resource and 600 KB transfer assertions in `tests/site.spec.js` when changing card media.
 
 ## 2026-09-11
 - Footer tagline text lives in `src/sections/Footer/components/FooterIntro.tsx`; wrap key words in a `<span>` for targeted color emphasis and micro-interactions.

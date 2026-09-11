@@ -25,7 +25,13 @@ export const ProjectsSection = () => {
               projectLinkVariant:
                 "bg-[linear-gradient(rgba(236,232,227,0)_19%,rgb(255,186,120))]",
               imageWrapperVariant: "-mr-10 md:-mr-20",
-              imageUrl: "/assets/site/flow.png",
+              imageSources: {
+                small: "/assets/site/work/flow-480.webm",
+                medium: "/assets/site/work/flow-800.webm",
+                large: "/assets/site/work/flow-1200.webm",
+              },
+              imageWidth: 1904,
+              imageHeight: 1079,
               title: "Flow",
               description:
                 "A CRM and customer-relationship workspace that keeps customer context, conversations, follow-ups, tasks, and next steps together in one place.",
@@ -36,7 +42,13 @@ export const ProjectsSection = () => {
               projectLinkVariant:
                 "bg-[linear-gradient(rgba(236,232,227,0)_19%,rgb(238,211,192))]",
               imageWrapperVariant: "-ml-10 md:-ml-20",
-              imageUrl: "/assets/site/forma.png",
+              imageSources: {
+                small: "/assets/site/work/forma-480.webm",
+                medium: "/assets/site/work/forma-800.webm",
+                large: "/assets/site/work/forma-1200.webm",
+              },
+              imageWidth: 1904,
+              imageHeight: 1059,
               title: "FORMA",
               description:
                 "An architectural studio concept focused on thoughtful homes, natural materials, quieter living, and spaces shaped around everyday life.",
@@ -52,7 +64,13 @@ export const ProjectsSection = () => {
               projectLinkVariant:
                 "bg-[linear-gradient(rgba(236,232,227,0)_19%,rgb(0,47,37))]",
               imageWrapperVariant: "-mr-10 md:-mr-20",
-              imageUrl: "/assets/site/auralis.png",
+              imageSources: {
+                small: "/assets/site/work/auralis-480.webm",
+                medium: "/assets/site/work/auralis-800.webm",
+                large: "/assets/site/work/auralis-1200.webm",
+              },
+              imageWidth: 1905,
+              imageHeight: 1079,
               title: "Auralis",
               description:
                 "A premium product launch and ecommerce-style website for wireless headphones, from high-resolution audio to product editions and pricing.",
@@ -63,7 +81,13 @@ export const ProjectsSection = () => {
               projectLinkVariant:
                 "bg-[linear-gradient(rgba(236,232,227,0)_19%,rgb(110,169,220))]",
               imageWrapperVariant: "-ml-10 md:-ml-20",
-              imageUrl: "/assets/site/sitecraft.png",
+              imageSources: {
+                small: "/assets/site/work/sitecraft-480.webm",
+                medium: "/assets/site/work/sitecraft-800.webm",
+                large: "/assets/site/work/sitecraft-1200.webm",
+              },
+              imageWidth: 1902,
+              imageHeight: 1079,
               title: "Sitecraft",
               description:
                 "A storefront for browsing and selecting ready-made website packages for businesses, portfolios, and ecommerce stores.",

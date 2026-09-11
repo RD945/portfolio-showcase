@@ -92,16 +92,33 @@ test("keyboard baseline, local resources, and page errors", async ({ page }) => 
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/#main$/);
 
-  const images = page.locator("main img:not([aria-hidden='true'])");
-  for (const image of await images.all()) {
-    await image.scrollIntoViewIfNeeded();
+  const media = page.locator("main img:not([aria-hidden='true']), main video");
+  for (const item of await media.all()) {
+    await item.scrollIntoViewIfNeeded();
     await expect
       .poll(
-        () => image.evaluate((element) => element.complete && element.naturalWidth > 0),
+        () =>
+          item.evaluate((element) =>
+            element.tagName === "VIDEO"
+              ? element.readyState >= 2
+              : element.complete && element.naturalWidth > 0,
+          ),
         { timeout: 20000 },
       )
       .toBe(true);
   }
+
+  const projectResources = await page.evaluate(() =>
+    performance
+      .getEntriesByType("resource")
+      .filter((resource) => resource.name.includes("/assets/site/work/"))
+      .map((resource) => ({ name: resource.name, transferSize: resource.transferSize })),
+  );
+  expect(projectResources).toHaveLength(4);
+  expect(projectResources.every((resource) => resource.name.endsWith(".webm"))).toBe(true);
+  expect(projectResources.reduce((total, resource) => total + resource.transferSize, 0)).toBeLessThan(
+    600 * 1024,
+  );
 
   expect(errors).toEqual([]);
   expect(failedRequests).toEqual([]);

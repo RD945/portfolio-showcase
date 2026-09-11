@@ -27,7 +27,7 @@ The functional suite lives in `tests/site.spec.js` and starts an isolated Vite s
 - The floating contact prompt is intentionally absent; the page uses an inline project CTA.
 - The mobile contact card is text-only, visible, usable, and free of horizontal overflow.
 - Skip link keyboard behavior and `#main` focus destination.
-- Image decoding, failed requests, HTTP error responses, page errors, and zero external runtime resources.
+- Image/video decoding, optimized portfolio media transfer, failed requests, HTTP error responses, page errors, and zero external runtime resources.
 - Reduced-motion behavior, touch target sizing, desktop/mobile screenshots, and phone landscape overflow.
 
 Screenshots are written to `test-results/desktop.png` and `test-results/mobile.png`.
@@ -53,7 +53,7 @@ Every iteration must satisfy:
 ## Optimization Rules
 
 - Fonts and images are served from `public/assets` with no third-party runtime requests.
-- The hero is text-first; portfolio and below-the-fold images are lazy-loaded and dimensioned.
+- The hero is text-first; portfolio WebM media is viewport-loaded, dimensioned, and selected by device width.
 - The contact CTA is text-only, so it does not ship an unused illustration or reserve an empty media column.
 - Inter is limited to a small local Latin file with `font-display: swap`.
 - Below-the-fold reveal motion uses `IntersectionObserver`; hero LCP content is not delayed by reveal animation.

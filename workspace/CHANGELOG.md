@@ -18,6 +18,9 @@ You MUST maintain this file to track your work across messages. This is NON-NEGO
 </instructions>
 
 <changelog>
+- 2026-09-12: Replaced the four large portfolio PNGs with lazy, viewport-selected one-second WebM stills at 480/800/1200 widths and added transfer-budget coverage.
+  Files: `public/assets/site/work`, `src/sections/ProjectsSection/components/ProjectCard.tsx`, `tests/site.spec.js`, `docs/TESTING.md`
+  Pattern: Project media loads only on viewport entry; desktop/mobile performance remains under the sub-one-second LCP budget.
 - 2026-09-12: Updated Selected Work links to the README-provided RD945 Vercel deployments for Flow, FORMA, Auralis, and Sitecraft.
   Files: `src/sections/ProjectsSection/index.tsx`, `C:\Users\Reetam\Desktop\projects\ga_soon\website\README.md`
   Pattern: External portfolio links point to the current live preview URLs rather than placeholder project hosts.
